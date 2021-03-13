@@ -93,7 +93,7 @@ final class WebgriffeSyliusAkeneoExtension extends AbstractResourceExtension imp
         'file_attribute' => [
             'class' => FileAttributeValueHandler::class,
             'arguments' => [
-                'webgriffe_sylius_akeneo.api_client',
+                'webgriffe_sylius_akeneo.api_client_official',
                 'filesystem',
             ],
         ],
@@ -120,7 +120,7 @@ final class WebgriffeSyliusAkeneoExtension extends AbstractResourceExtension imp
             'arguments' => [
                 'sylius.factory.product_image',
                 'sylius.repository.product_image',
-                'webgriffe_sylius_akeneo.api_client',
+                'webgriffe_sylius_akeneo.api_client_official',
             ],
         ],
         'immutable_slug' => [
@@ -135,7 +135,7 @@ final class WebgriffeSyliusAkeneoExtension extends AbstractResourceExtension imp
         'product_option' => [
             'class' => ProductOptionValueHandler::class,
             'arguments' => [
-                'webgriffe_sylius_akeneo.api_client',
+                'webgriffe_sylius_akeneo.api_client_official',
                 'sylius.repository.product_option',
                 'sylius.factory.product_option_value',
                 'sylius.factory.product_option_value_translation',
