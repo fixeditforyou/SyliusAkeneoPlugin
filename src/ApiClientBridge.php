@@ -20,11 +20,12 @@ use Akeneo\Pim\ApiClient\Api\MeasurementFamilyApiInterface;
 use Akeneo\Pim\ApiClient\Api\MediaFileApiInterface;
 use Akeneo\Pim\ApiClient\Api\ProductApiInterface;
 use Akeneo\Pim\ApiClient\Api\ProductModelApiInterface;
+use Webgriffe\SyliusAkeneoPlugin\AttributeOptions\ApiClientInterface as AttributeOptionsApiClientInterface;
 
 final class ApiClientBridge implements ApiClientBridgeInterface
 {
     /**
-     * @var ApiClientInterface
+     * @var ApiClientInterface&AttributeOptionsApiClientInterface
      */
     private $apiClient;
     /**
@@ -32,7 +33,10 @@ final class ApiClientBridge implements ApiClientBridgeInterface
      */
     private $akeneoPimClient;
 
-    public function __construct(ApiClientInterface $apiClient, AkeneoPimClientInterface $akeneoPimClient)
+    /**
+     * @param ApiClientInterface&AttributeOptionsApiClientInterface $apiClient
+     */
+    public function __construct($apiClient, AkeneoPimClientInterface $akeneoPimClient)
     {
         $this->apiClient = $apiClient;
         $this->akeneoPimClient = $akeneoPimClient;
@@ -156,5 +160,15 @@ final class ApiClientBridge implements ApiClientBridgeInterface
     public function findProductsModifiedSince(\DateTime $date): array
     {
         return $this->apiClient->findProductsModifiedSince($date);
+    }
+
+    public function findAllAttributeOptions(string $attributeCode): array
+    {
+        return $this->apiClient->findAllAttributeOptions($attributeCode);
+    }
+
+    public function findAllAttributes(): array
+    {
+        return $this->apiClient->findAllAttributes();
     }
 }
