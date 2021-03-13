@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace spec\Webgriffe\SyliusAkeneoPlugin\ValueHandler;
 
-use Akeneo\Pim\ApiClient\AkeneoPimClientInterface;
 use Akeneo\Pim\ApiClient\Api\AttributeOptionApiInterface;
 use Akeneo\Pim\ApiClient\Exception\HttpException;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -20,6 +19,7 @@ use Sylius\Component\Product\Repository\ProductOptionRepositoryInterface;
 use Sylius\Component\Resource\Factory\FactoryInterface;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Sylius\Component\Resource\Translation\Provider\TranslationLocaleProviderInterface;
+use Webgriffe\SyliusAkeneoPlugin\ApiClientBridgeInterface;
 use Webgriffe\SyliusAkeneoPlugin\ValueHandler\ProductOptionValueHandler;
 use Webgriffe\SyliusAkeneoPlugin\ValueHandlerInterface;
 
@@ -41,7 +41,7 @@ class ProductOptionValueHandlerSpec extends ObjectBehavior
         ProductVariantInterface $productVariant,
         ProductInterface $product,
         ProductOptionInterface $productOption,
-        AkeneoPimClientInterface $apiClient,
+        ApiClientBridgeInterface $apiClient,
         AttributeOptionApiInterface $attributeOptionApi,
         ProductOptionRepositoryInterface $productOptionRepository,
         FactoryInterface $productOptionValueFactory,

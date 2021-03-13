@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace spec\Webgriffe\SyliusAkeneoPlugin\ValueHandler;
 
-use Akeneo\Pim\ApiClient\AkeneoPimClientInterface;
 use Akeneo\Pim\ApiClient\Api\AttributeApiInterface;
 use Akeneo\Pim\ApiClient\Api\MediaFileApiInterface;
 use Akeneo\Pim\ApiClient\Exception\HttpException;
@@ -15,6 +14,7 @@ use Prophecy\Argument;
 use Sylius\Component\Core\Model\ProductInterface;
 use Sylius\Component\Core\Model\ProductVariantInterface;
 use Symfony\Component\Filesystem\Filesystem;
+use Webgriffe\SyliusAkeneoPlugin\ApiClientBridgeInterface;
 use Webgriffe\SyliusAkeneoPlugin\ValueHandler\FileAttributeValueHandler;
 use Webgriffe\SyliusAkeneoPlugin\ValueHandlerInterface;
 
@@ -23,7 +23,7 @@ class FileAttributeValueHandlerSpec extends ObjectBehavior
     const AKENEO_FILE_ATTRIBUTE_CODE = 'allegato_1';
 
     function let(
-        AkeneoPimClientInterface $apiClient,
+        ApiClientBridgeInterface $apiClient,
         AttributeApiInterface $attributeApi,
         MediaFileApiInterface $productMediaFileApi,
         Filesystem $filesystem

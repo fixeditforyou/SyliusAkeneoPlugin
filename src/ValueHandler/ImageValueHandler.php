@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Webgriffe\SyliusAkeneoPlugin\ValueHandler;
 
-use Akeneo\Pim\ApiClient\AkeneoPimClientInterface;
 use Sylius\Component\Core\Model\ProductImageInterface;
 use Sylius\Component\Core\Model\ProductInterface;
 use Sylius\Component\Core\Model\ProductVariantInterface;
 use Sylius\Component\Resource\Factory\FactoryInterface;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Symfony\Component\HttpFoundation\File\File;
+use Webgriffe\SyliusAkeneoPlugin\ApiClientBridgeInterface;
 use Webgriffe\SyliusAkeneoPlugin\ValueHandlerInterface;
 use Webmozart\Assert\Assert;
 
@@ -22,7 +22,7 @@ final class ImageValueHandler implements ValueHandlerInterface
     /** @var RepositoryInterface */
     private $productImageRepository;
 
-    /** @var AkeneoPimClientInterface */
+    /** @var ApiClientBridgeInterface */
     private $apiClient;
 
     /** @var string */
@@ -34,7 +34,7 @@ final class ImageValueHandler implements ValueHandlerInterface
     public function __construct(
         FactoryInterface $productImageFactory,
         RepositoryInterface $productImageRepository,
-        AkeneoPimClientInterface $apiClient,
+        ApiClientBridgeInterface $apiClient,
         string $akeneoAttributeCode,
         string $syliusImageType
     ) {

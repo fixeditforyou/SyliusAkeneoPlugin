@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace spec\Webgriffe\SyliusAkeneoPlugin\ValueHandler;
 
-use Akeneo\Pim\ApiClient\AkeneoPimClientInterface;
 use Akeneo\Pim\ApiClient\Api\MediaFileApiInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use PhpSpec\ObjectBehavior;
@@ -16,6 +15,7 @@ use Sylius\Component\Core\Model\ProductInterface;
 use Sylius\Component\Core\Model\ProductVariantInterface;
 use Sylius\Component\Resource\Factory\FactoryInterface;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
+use Webgriffe\SyliusAkeneoPlugin\ApiClientBridgeInterface;
 use Webgriffe\SyliusAkeneoPlugin\ValueHandler\ImageValueHandler;
 
 class ImageValueHandlerSpec extends ObjectBehavior
@@ -37,7 +37,7 @@ class ImageValueHandlerSpec extends ObjectBehavior
         FactoryInterface $productImageFactory,
         RepositoryInterface $productImageRepository,
         ProductImageInterface $productImage,
-        AkeneoPimClientInterface $apiClient,
+        ApiClientBridgeInterface $apiClient,
         MediaFileApiInterface $productMediaFileApi,
         ResponseInterface $downloadResponse,
         StreamInterface $responseBody,

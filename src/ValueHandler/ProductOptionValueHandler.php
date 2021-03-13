@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Webgriffe\SyliusAkeneoPlugin\ValueHandler;
 
-use Akeneo\Pim\ApiClient\AkeneoPimClientInterface;
 use Akeneo\Pim\ApiClient\Exception\HttpException;
 use Sylius\Component\Core\Model\ProductInterface;
 use Sylius\Component\Core\Model\ProductVariantInterface;
@@ -15,12 +14,13 @@ use Sylius\Component\Product\Repository\ProductOptionRepositoryInterface;
 use Sylius\Component\Resource\Factory\FactoryInterface;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Sylius\Component\Resource\Translation\Provider\TranslationLocaleProviderInterface;
+use Webgriffe\SyliusAkeneoPlugin\ApiClientBridgeInterface;
 use Webgriffe\SyliusAkeneoPlugin\ValueHandlerInterface;
 use Webmozart\Assert\Assert;
 
 final class ProductOptionValueHandler implements ValueHandlerInterface
 {
-    /** @var AkeneoPimClientInterface */
+    /** @var ApiClientBridgeInterface */
     private $apiClient;
 
     /** @var ProductOptionRepositoryInterface */
@@ -39,7 +39,7 @@ final class ProductOptionValueHandler implements ValueHandlerInterface
     private $translationLocaleProvider;
 
     public function __construct(
-        AkeneoPimClientInterface $apiClient,
+        ApiClientBridgeInterface $apiClient,
         ProductOptionRepositoryInterface $productOptionRepository,
         FactoryInterface $productOptionValueFactory,
         FactoryInterface $productOptionValueTranslationFactory,

@@ -4,17 +4,17 @@ declare(strict_types=1);
 
 namespace Tests\Webgriffe\SyliusAkeneoPlugin\Behat\Context\Setup;
 
-use Akeneo\Pim\ApiClient\AkeneoPimClientInterface;
 use Behat\Behat\Context\Context;
 use Tests\Webgriffe\SyliusAkeneoPlugin\Integration\TestDouble\OfficialApiClientMock;
+use Webgriffe\SyliusAkeneoPlugin\ApiClientBridgeInterface;
 use Webmozart\Assert\Assert;
 
 final class AkeneoContext implements Context
 {
-    /** @var AkeneoPimClientInterface|OfficialApiClientMock */
+    /** @var ApiClientBridgeInterface|OfficialApiClientMock */
     private $apiClient;
 
-    public function __construct(AkeneoPimClientInterface $apiClient)
+    public function __construct(ApiClientBridgeInterface $apiClient)
     {
         $this->apiClient = $apiClient;
     }

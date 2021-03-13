@@ -4,17 +4,17 @@ declare(strict_types=1);
 
 namespace Webgriffe\SyliusAkeneoPlugin\Product;
 
-use Akeneo\Pim\ApiClient\AkeneoPimClientInterface;
 use Akeneo\Pim\ApiClient\Exception\HttpException;
 use Sylius\Component\Product\Model\ProductOptionInterface;
 use Sylius\Component\Product\Model\ProductOptionTranslationInterface;
 use Sylius\Component\Product\Repository\ProductOptionRepositoryInterface;
 use Sylius\Component\Resource\Factory\FactoryInterface;
+use Webgriffe\SyliusAkeneoPlugin\ApiClientBridgeInterface;
 use Webmozart\Assert\Assert;
 
 final class ProductOptionsResolver implements ProductOptionsResolverInterface
 {
-    /** @var AkeneoPimClientInterface */
+    /** @var ApiClientBridgeInterface */
     private $apiClient;
 
     /** @var ProductOptionRepositoryInterface */
@@ -27,7 +27,7 @@ final class ProductOptionsResolver implements ProductOptionsResolverInterface
     private $productOptionTranslationFactory;
 
     public function __construct(
-        AkeneoPimClientInterface $apiClient,
+        ApiClientBridgeInterface $apiClient,
         ProductOptionRepositoryInterface $productOptionRepository,
         FactoryInterface $productOptionFactory,
         FactoryInterface $productOptionTranslationFactory

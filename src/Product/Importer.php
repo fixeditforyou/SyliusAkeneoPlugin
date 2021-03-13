@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Webgriffe\SyliusAkeneoPlugin\Product;
 
-use Akeneo\Pim\ApiClient\AkeneoPimClientInterface;
 use Akeneo\Pim\ApiClient\Search\SearchBuilder;
 use Doctrine\Common\Collections\ArrayCollection;
 use Sylius\Bundle\ResourceBundle\Event\ResourceControllerEvent;
@@ -19,6 +18,7 @@ use Sylius\Component\Product\Factory\ProductVariantFactoryInterface;
 use Sylius\Component\Resource\Factory\FactoryInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Webgriffe\SyliusAkeneoPlugin\ApiClientBridgeInterface;
 use Webgriffe\SyliusAkeneoPlugin\ImporterInterface;
 use Webgriffe\SyliusAkeneoPlugin\ValueHandlersResolverInterface;
 use Webmozart\Assert\Assert;
@@ -36,7 +36,7 @@ final class Importer implements ImporterInterface
     /** @var ProductRepositoryInterface */
     private $productRepository;
 
-    /** @var AkeneoPimClientInterface */
+    /** @var ApiClientBridgeInterface */
     private $apiClient;
 
     /** @var ValueHandlersResolverInterface */
@@ -70,7 +70,7 @@ final class Importer implements ImporterInterface
         ProductVariantFactoryInterface $productVariantFactory,
         ProductVariantRepositoryInterface $productVariantRepository,
         ProductRepositoryInterface $productRepository,
-        AkeneoPimClientInterface $apiClient,
+        ApiClientBridgeInterface $apiClient,
         ValueHandlersResolverInterface $valueHandlerResolver,
         ProductFactoryInterface $productFactory,
         TaxonsResolverInterface $taxonsResolver,

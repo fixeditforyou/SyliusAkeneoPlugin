@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Webgriffe\SyliusAkeneoPlugin\ProductAssociations;
 
-use Akeneo\Pim\ApiClient\AkeneoPimClientInterface;
 use Akeneo\Pim\ApiClient\Exception\HttpException;
 use Akeneo\Pim\ApiClient\Search\SearchBuilder;
 use Sylius\Component\Core\Model\ProductInterface;
@@ -14,6 +13,7 @@ use Sylius\Component\Product\Model\ProductAssociationTypeInterface;
 use Sylius\Component\Product\Repository\ProductAssociationTypeRepositoryInterface;
 use Sylius\Component\Resource\Factory\FactoryInterface;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
+use Webgriffe\SyliusAkeneoPlugin\ApiClientBridgeInterface;
 use Webgriffe\SyliusAkeneoPlugin\ImporterInterface;
 use Webmozart\Assert\Assert;
 
@@ -21,7 +21,7 @@ final class Importer implements ImporterInterface
 {
     private const AKENEO_ENTITY = 'ProductAssociations';
 
-    /** @var AkeneoPimClientInterface */
+    /** @var ApiClientBridgeInterface */
     private $apiClient;
 
     /** @var ProductRepositoryInterface */
@@ -37,7 +37,7 @@ final class Importer implements ImporterInterface
     private $productAssociationFactory;
 
     public function __construct(
-        AkeneoPimClientInterface $apiClient,
+        ApiClientBridgeInterface $apiClient,
         ProductRepositoryInterface $productRepository,
         RepositoryInterface $productAssociationRepository,
         ProductAssociationTypeRepositoryInterface $productAssociationTypeRepository,

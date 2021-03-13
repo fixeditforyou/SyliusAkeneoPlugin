@@ -65,6 +65,12 @@
         </service>
         <service id="Akeneo\Pim\ApiClient\AkeneoPimClientInterface" alias="webgriffe_sylius_akeneo.api_client_official" />
 
+        <service id="webgriffe_sylius_akeneo.api_client_bridge" class="Webgriffe\SyliusAkeneoPlugin\ApiClientBridge">
+            <argument type="service" id="webgriffe_sylius_akeneo.api_client" />
+            <argument type="service" id="webgriffe_sylius_akeneo.api_client_official" />
+        </service>
+        <service id="Webgriffe\SyliusAkeneoPlugin\ApiClientBridgeInterface" alias="webgriffe_sylius_akeneo.api_client_bridge" />
+
         <service id="webgriffe_sylius_akeneo.product.value_handlers_resolver" class="Webgriffe\SyliusAkeneoPlugin\PriorityValueHandlersResolver" />
         <service id="Webgriffe\SyliusAkeneoPlugin\ValueHandlersResolverInterface" alias="webgriffe_sylius_akeneo.product.value_handlers_resolver" />
 
@@ -114,7 +120,7 @@
         <service id="Webgriffe\SyliusAkeneoPlugin\Product\TaxonsResolverInterface" alias="webgriffe_sylius_akeneo.product.taxons_resolver" />
 
         <service id="webgriffe_sylius_akeneo.product.product_options_resolver" class="Webgriffe\SyliusAkeneoPlugin\Product\ProductOptionsResolver">
-            <argument type="service" id="webgriffe_sylius_akeneo.api_client_official"/>
+            <argument type="service" id="webgriffe_sylius_akeneo.api_client_bridge"/>
             <argument type="service" id="sylius.repository.product_option" />
             <argument type="service" id="sylius.factory.product_option" />
             <argument type="service" id="sylius.factory.product_option_translation" />
@@ -134,7 +140,7 @@
             <argument type="service" id="sylius.factory.product_variant" />
             <argument type="service" id="sylius.repository.product_variant" />
             <argument type="service" id="sylius.repository.product" />
-            <argument type="service" id="webgriffe_sylius_akeneo.api_client_official" />
+            <argument type="service" id="webgriffe_sylius_akeneo.api_client_bridge" />
             <argument type="service" id="webgriffe_sylius_akeneo.product.value_handlers_resolver" />
             <argument type="service" id="sylius.factory.product" />
             <argument type="service" id="webgriffe_sylius_akeneo.product.taxons_resolver" />
@@ -149,7 +155,7 @@
 
         <!-- Product Associations Importer -->
         <service id="webgriffe_sylius_akeneo.product_associations.importer" class="Webgriffe\SyliusAkeneoPlugin\ProductAssociations\Importer" >
-            <argument type="service" id="webgriffe_sylius_akeneo.api_client_official"/>
+            <argument type="service" id="webgriffe_sylius_akeneo.api_client_bridge"/>
             <argument type="service" id="sylius.repository.product"/>
             <argument type="service" id="sylius.repository.product_association"/>
             <argument type="service" id="sylius.repository.product_association_type"/>

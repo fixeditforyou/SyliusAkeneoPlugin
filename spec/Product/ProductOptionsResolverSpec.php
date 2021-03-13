@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace spec\Webgriffe\SyliusAkeneoPlugin\Product;
 
-use Akeneo\Pim\ApiClient\AkeneoPimClientInterface;
 use Akeneo\Pim\ApiClient\Api\AttributeApiInterface;
 use Akeneo\Pim\ApiClient\Api\FamilyVariantApiInterface;
 use Akeneo\Pim\ApiClient\Api\ProductModelApiInterface;
@@ -16,6 +15,7 @@ use Sylius\Component\Product\Model\ProductOptionInterface;
 use Sylius\Component\Product\Model\ProductOptionTranslationInterface;
 use Sylius\Component\Product\Repository\ProductOptionRepositoryInterface;
 use Sylius\Component\Resource\Factory\FactoryInterface;
+use Webgriffe\SyliusAkeneoPlugin\ApiClientBridgeInterface;
 use Webgriffe\SyliusAkeneoPlugin\Product\ProductOptionsResolver;
 use Webgriffe\SyliusAkeneoPlugin\Product\ProductOptionsResolverInterface;
 
@@ -34,7 +34,7 @@ class ProductOptionsResolverSpec extends ObjectBehavior
     private const ENGLISH_LABEL = 'English label';
 
     function let(
-        AkeneoPimClientInterface $apiClient,
+        ApiClientBridgeInterface $apiClient,
         ProductModelApiInterface $productModelApi,
         FamilyVariantApiInterface $familyVariantApi,
         AttributeApiInterface $attributeApi,

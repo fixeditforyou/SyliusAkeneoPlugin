@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Webgriffe\SyliusAkeneoPlugin\ValueHandler;
 
-use Akeneo\Pim\ApiClient\AkeneoPimClientInterface;
 use Akeneo\Pim\ApiClient\Exception\HttpException;
 use Sylius\Component\Core\Model\ProductVariantInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\File;
+use Webgriffe\SyliusAkeneoPlugin\ApiClientBridgeInterface;
 use Webgriffe\SyliusAkeneoPlugin\ValueHandlerInterface;
 use Webmozart\Assert\Assert;
 
@@ -16,7 +16,7 @@ final class FileAttributeValueHandler implements ValueHandlerInterface
 {
     public const AKENEO_ATTRIBUTE_TYPE_FILE = 'pim_catalog_file';
 
-    /** @var AkeneoPimClientInterface */
+    /** @var ApiClientBridgeInterface */
     private $apiClient;
 
     /** @var Filesystem */
@@ -29,7 +29,7 @@ final class FileAttributeValueHandler implements ValueHandlerInterface
     private $downloadPath;
 
     public function __construct(
-        AkeneoPimClientInterface $apiClient,
+        ApiClientBridgeInterface $apiClient,
         Filesystem $filesystem,
         string $akeneoAttributeCode,
         string $downloadPath
