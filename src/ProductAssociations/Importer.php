@@ -72,6 +72,11 @@ final class Importer implements ImporterInterface
         $parentCode = $productVariantResponse['parent'];
         if ($parentCode !== null) {
             $productCode = $parentCode;
+            $parentProductModelCode = $this->apiClient->findProductModel($parentCode)['parent'] ?? null;
+            if ($parentProductModelCode !== null) {
+                $productCode = $parentProductModelCode;
+            }
+
         } else {
             $productCode = $identifier;
         }

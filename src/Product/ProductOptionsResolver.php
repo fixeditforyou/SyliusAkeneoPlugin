@@ -70,44 +70,46 @@ final class ProductOptionsResolver implements ProductOptionsResolverInterface
             );
         }
         $productOptions = [];
-        foreach ($familyVariantResponse['variant_attribute_sets'][0]['axes'] as $position => $attributeCode) {
-            /** @var ProductOptionInterface|null $productOption */
-            $productOption = $this->productOptionRepository->findOneBy(['code' => $attributeCode]);
-            if ($productOption) {
-                $productOptions[] = $productOption;
-
-                continue;
-            }
-            $productOption = $this->productOptionFactory->createNew();
-            Assert::isInstanceOf($productOption, ProductOptionInterface::class);
-            $productOption->setCode($attributeCode);
-            $productOption->setPosition($position);
-            $attributeResponse = $this->apiClient->findAttribute($attributeCode);
-            if (!$attributeResponse) {
-                throw new \RuntimeException(
-                    sprintf(
-                        'Cannot resolve product options for product "%s" because one of its variant attributes, ' .
-                        '"%s", cannot be found on Akeneo.',
-                        $akeneoProduct['identifier'],
-                        $attributeCode
-                    )
-                );
-            }
-            foreach ($attributeResponse['labels'] as $locale => $label) {
-                $productOptionTranslation = $productOption->getTranslation($locale);
-                if ($productOptionTranslation->getLocale() === $locale) {
-                    $productOptionTranslation->setName($label);
+        foreach ($familyVariantResponse['variant_attribute_sets'] as $variantAttributeSet) {
+            foreach ($variantAttributeSet['axes'] as $position => $attributeCode) {
+                /** @var ProductOptionInterface|null $productOption */
+                $productOption = $this->productOptionRepository->findOneBy(['code' => $attributeCode]);
+                if ($productOption) {
+                    $productOptions[] = $productOption;
 
                     continue;
                 }
-                /** @var ProductOptionTranslationInterface $newProductOptionTranslation */
-                $newProductOptionTranslation = $this->productOptionTranslationFactory->createNew();
-                $newProductOptionTranslation->setLocale($locale);
-                $newProductOptionTranslation->setName($label);
-                $productOption->addTranslation($newProductOptionTranslation);
+                $productOption = $this->productOptionFactory->createNew();
+                Assert::isInstanceOf($productOption, ProductOptionInterface::class);
+                $productOption->setCode($attributeCode);
+                $productOption->setPosition($position);
+                $attributeResponse = $this->apiClient->findAttribute($attributeCode);
+                if (!$attributeResponse) {
+                    throw new \RuntimeException(
+                        sprintf(
+                            'Cannot resolve product options for product "%s" because one of its variant attributes, ' .
+                            '"%s", cannot be found on Akeneo.',
+                            $akeneoProduct['identifier'],
+                            $attributeCode
+                        )
+                    );
+                }
+                foreach ($attributeResponse['labels'] as $locale => $label) {
+                    $productOptionTranslation = $productOption->getTranslation($locale);
+                    if ($productOptionTranslation->getLocale() === $locale) {
+                        $productOptionTranslation->setName($label);
+
+                        continue;
+                    }
+                    /** @var ProductOptionTranslationInterface $newProductOptionTranslation */
+                    $newProductOptionTranslation = $this->productOptionTranslationFactory->createNew();
+                    $newProductOptionTranslation->setLocale($locale);
+                    $newProductOptionTranslation->setName($label);
+                    $productOption->addTranslation($newProductOptionTranslation);
+                }
+                $this->productOptionRepository->add($productOption);
+                $productOptions[] = $productOption;
             }
-            $this->productOptionRepository->add($productOption);
-            $productOptions[] = $productOption;
         }
 
         return $productOptions;
