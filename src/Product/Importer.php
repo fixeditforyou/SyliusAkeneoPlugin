@@ -117,6 +117,7 @@ final class Importer implements ImporterInterface
     public function import(string $identifier): void
     {
         $productVariantResponse = $this->apiClient->findProduct($identifier);
+
         if (!$productVariantResponse) {
             throw new \RuntimeException(sprintf('Cannot find product "%s" on Akeneo.', $identifier));
         }
@@ -179,6 +180,18 @@ final class Importer implements ImporterInterface
         $identifier = $productVariantResponse['identifier'];
         $parentCode = $productVariantResponse['parent'];
         if ($parentCode !== null) {
+            $parentProductModelResponse = $this->apiClient->findProductModel($parentCode);
+            $parentProducModelCode = $parentProductModelResponse['parent'];
+            if ($parentProducModelCode !== null) {
+                $product = $this->productRepository->findOneByCode($parentProducModelCode);
+//                $productVariantResponse['parent'] = $parentProducModelCode;
+                if (!$product) {
+                    $product = $this->createNewProductFromAkeneoProduct($productVariantResponse);
+                }
+
+                return $product;
+            }
+
             $product = $this->productRepository->findOneByCode($parentCode);
             if (!$product) {
                 $product = $this->createNewProductFromAkeneoProduct($productVariantResponse);
