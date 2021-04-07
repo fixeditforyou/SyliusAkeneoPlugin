@@ -184,7 +184,8 @@ final class Importer implements ImporterInterface
             $parentProducModelCode = $parentProductModelResponse['parent'];
             if ($parentProducModelCode !== null) {
                 $product = $this->productRepository->findOneByCode($parentProducModelCode);
-//                $productVariantResponse['parent'] = $parentProducModelCode;
+                // TODO: Refactor this quickfix of setting the parent id
+                $productVariantResponse['parent'] = $parentProducModelCode;
                 if (!$product) {
                     $product = $this->createNewProductFromAkeneoProduct($productVariantResponse);
                 }
