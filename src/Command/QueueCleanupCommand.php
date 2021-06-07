@@ -43,7 +43,7 @@ final class QueueCleanupCommand extends Command
     {
         $this
             ->setDescription('Clean the Akeneo\'s queue of items older than N days.')
-            ->setHelp('This command allows you to clean the Akeneo\'s queue of item older than a specificed numbers of days.')
+            ->setHelp('This command allows you to clean the Akeneo\'s queue of item older than a specified numbers of days.')
             ->addArgument(
                 self::DAYS_ARGUMENT_NAME,
                 InputArgument::OPTIONAL,
