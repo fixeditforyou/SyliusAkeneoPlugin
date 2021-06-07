@@ -9,6 +9,7 @@ use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Command\LockableTrait;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Webgriffe\SyliusAkeneoPlugin\ImporterInterface;
 use Webgriffe\SyliusAkeneoPlugin\ImporterRegistryInterface;
@@ -17,6 +18,8 @@ use Webgriffe\SyliusAkeneoPlugin\Repository\QueueItemRepositoryInterface;
 final class ConsumeCommand extends Command
 {
     use LockableTrait;
+
+    private const LIMIT_OPTION_NAME = 'limit';
 
     protected static $defaultName = 'webgriffe:akeneo:consume';
 
@@ -42,7 +45,15 @@ final class ConsumeCommand extends Command
 
     protected function configure(): void
     {
-        $this->setDescription('Process the Queue by calling the proper importer for each item');
+        $this
+            ->setDescription('Process the Queue by calling the proper importer for each item')
+            ->addOption(
+                self::LIMIT_OPTION_NAME,
+                'l',
+                InputOption::VALUE_REQUIRED,
+                'Limit the number of handled queue entries',
+                '0'
+            );
     }
 
     /**
@@ -56,8 +67,17 @@ final class ConsumeCommand extends Command
             return 0;
         }
 
+        $limit = (int) $input->getOption('limit');
+        $count = 0;
+
         $queueItems = $this->queueItemRepository->findAllToImport();
         foreach ($queueItems as $queueItem) {
+            if ($limit > 0 && $count > $limit) {
+                $output->writeln("Stopping after $limit iterations");
+
+                break;
+            }
+
             $akeneoIdentifier = $queueItem->getAkeneoIdentifier();
 
             try {
@@ -96,6 +116,8 @@ final class ConsumeCommand extends Command
                     $akeneoIdentifier
                 )
             );
+
+            $count++;
         }
 
         $this->release();
